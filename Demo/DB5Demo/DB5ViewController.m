@@ -14,7 +14,6 @@
 @interface DB5ViewController ()
 
 @property (strong, nonatomic) IBOutlet UILabel *label;
-@property (nonatomic, strong) VSTheme *theme;
 
 @end
 
@@ -27,7 +26,7 @@
 	self.label.textColor = [[VSThemeLoader sharedInstance].defaultTheme colorForKey:@"labelTextColor"];
 	self.label.font = [[VSThemeLoader sharedInstance].defaultTheme fontForKey:@"labelFont"];
 
-	[self.theme animateWithAnimationSpecifierKey:@"labelAnimation" animations:^{
+	[[VSThemeLoader sharedInstance].defaultTheme animateWithAnimationSpecifierKey:@"labelAnimation" animations:^{
 
 		CGRect rLabel = self.label.frame;
 		rLabel.origin = [[VSThemeLoader sharedInstance].defaultTheme pointForKey:@"label"];

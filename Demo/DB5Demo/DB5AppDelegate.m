@@ -8,15 +8,6 @@
 
 #import "DB5AppDelegate.h"
 #import "DB5ViewController.h"
-#import "VSThemeLoader.h"
-#import "VSTheme.h"
-
-
-@interface DB5AppDelegate ()
-
-@property (nonatomic, strong) VSThemeLoader *themeLoader;
-@property (nonatomic, strong) VSTheme *theme;
-@end
 
 
 @implementation DB5AppDelegate
