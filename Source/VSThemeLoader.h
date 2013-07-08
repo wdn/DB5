@@ -18,6 +18,8 @@
 
 + (VSThemeLoader *)sharedInstance;
 
+- (void) loadThemesFromFilename:(NSString*)filename;
+- (void) reloadThemes;
 - (VSTheme *)themeNamed:(NSString *)themeName;
 
 @end

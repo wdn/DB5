@@ -34,7 +34,13 @@
 	if (self == nil)
 		return nil;
 	
-	NSString *filename = @"DB5";
+	[self reloadThemes];
+	
+	return self;
+}
+
+- (void) loadThemesFromFilename:(NSString*)filename
+{
 	NSDictionary *themesDictionary;
 	NSString *themesFilePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"plist"];
 	if (themesFilePath != nil) {
@@ -56,25 +62,28 @@
 		theme.name = oneKey;
 		[themes addObject:theme];
 	}
-
-    for (VSTheme *oneTheme in themes) { /*All themes inherit from the default theme.*/
+	
+	for (VSTheme *oneTheme in themes) { /*All themes inherit from the default theme.*/
 		if (oneTheme != _defaultTheme)
 			oneTheme.parentTheme = _defaultTheme;
-    }
-    
-	_themes = themes;
+	}
 	
-	return self;
+	_themes = themes;
 }
 
+- (void) reloadThemes
+{
+	NSString *filename = @"DB5";
+	[self loadThemesFromFilename:filename];
+}
 
 - (VSTheme *)themeNamed:(NSString *)themeName {
-
+	
 	for (VSTheme *oneTheme in self.themes) {
 		if ([themeName isEqualToString:oneTheme.name])
 			return oneTheme;
 	}
-
+	
 	return nil;
 }
 
