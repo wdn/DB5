@@ -34,24 +34,44 @@
 	if (self == nil)
 		return nil;
 	
+	self.themeSource = @"file:///DB5";
+//	self.themeSource = @"file:///DB5-alt";
+//	self.themeSource = @"https://host/DB5.json";
 	[self reloadThemes];
 	
 	return self;
 }
 
-- (void) loadThemesFromFilename:(NSString*)filename
+- (void) loadThemesFromURL:(NSURL*)url
 {
 	NSDictionary *themesDictionary;
-	NSString *themesFilePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"plist"];
-	if (themesFilePath != nil) {
-		themesDictionary = [NSDictionary dictionaryWithContentsOfFile:themesFilePath];
-	} else {
-		themesFilePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"json"];
-		NSInputStream *stream = [NSInputStream inputStreamWithFileAtPath:themesFilePath];
-		[stream open];
-		themesDictionary = [NSJSONSerialization JSONObjectWithStream:stream options:0 error:nil];
-		[stream close];
+	NSString* scheme = [url scheme];
+	if ([scheme isEqualToString:@"file"])
+	{
+		NSString* filename = [url path];
+		NSString* themesFilePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"plist"];
+		if (themesFilePath != nil) {
+			themesDictionary = [NSDictionary dictionaryWithContentsOfFile:themesFilePath];
+		} else {
+			themesFilePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"json"];
+			NSInputStream *stream = [NSInputStream inputStreamWithFileAtPath:themesFilePath];
+			[stream open];
+			themesDictionary = [NSJSONSerialization JSONObjectWithStream:stream options:0 error:nil];
+			[stream close];
+		}
 	}
+	else if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])
+	{
+		if ([[url pathExtension] isEqualToString:@"plist"])
+			themesDictionary = [NSDictionary dictionaryWithContentsOfURL:url];
+		else if ([[url pathExtension] isEqualToString:@"json"])
+		{
+			NSData* data = [NSData dataWithContentsOfURL:url];
+			themesDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+		}
+	}
+	else
+		return;
 	
 	NSMutableArray *themes = [NSMutableArray array];
 	for (NSString *oneKey in themesDictionary) {
@@ -73,8 +93,8 @@
 
 - (void) reloadThemes
 {
-	NSString *filename = @"DB5";
-	[self loadThemesFromFilename:filename];
+	NSURL* url = [NSURL URLWithString:self.themeSource];
+	[self loadThemesFromURL:url];
 }
 
 - (VSTheme *)themeNamed:(NSString *)themeName {

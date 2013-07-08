@@ -13,12 +13,13 @@
 
 @interface VSThemeLoader : NSObject
 
+@property (nonatomic, strong) NSString* themeSource;
 @property (nonatomic, strong, readonly) VSTheme *defaultTheme;
 @property (nonatomic, strong, readonly) NSArray *themes;
 
 + (VSThemeLoader *)sharedInstance;
 
-- (void) loadThemesFromFilename:(NSString*)filename;
+- (void) loadThemesFromURL:(NSURL*)url;
 - (void) reloadThemes;
 - (VSTheme *)themeNamed:(NSString *)themeName;
 
