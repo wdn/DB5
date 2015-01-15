@@ -1,11 +1,15 @@
 Pod::Spec.new do |s|
   s.name     = 'DB5'
-  s.version  = '1.0'
+  s.version  = '1.0.1'
   s.license  = 'MIT'
-  s.summary  = 'App Configuration via Plist'
-  s.homepage = 'https://github.com/quartermaster/DB5/'
-  s.authors  = { 'Brent Simmons' => '@brentsimmons' }
-  s.source   = { :git => 'https://github.com/exister/DB5.git'}
+  s.summary  = 'Fork of DB5'
+  s.homepage = 'https://github.com/wdn/DB5/'
+  s.authors  = { 'Brent Simmons' => '@brentsimmons',
+                 'W. Dana Nuon'  => '@wdnuon'
+               }
+  s.source   = { :git => 'https://github.com/wdn/DB5.git',
+                 :tag => s.version.to_s
+               }
   s.source_files = 'Source/*.{h,m}'
   s.requires_arc = true
 
