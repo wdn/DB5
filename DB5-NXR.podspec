@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name     = 'DB5'
+  s.name     = 'DB5-NXR'
   s.version  = '1.0.1'
   s.license  = 'MIT'
   s.summary  = 'Fork of DB5'
